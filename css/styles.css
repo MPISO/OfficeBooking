@@ -1,1 +1,257 @@
-/*
+/* Fonts */
+
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("../fonts/JosefinSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("../fonts/JosefinSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Colours and basic layout */
+
+:root {
+  --navy: #101d35;
+  --ice: #e5f1fa;
+  --blue: #2855ff;
+  --chartreuse: #d6ef68;
+  --muted: #45566c;
+  --border: #bacbdb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--ice);
+  color: var(--navy);
+  font-family: "Josefin Sans", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+header,
+main,
+footer {
+  width: min(1200px, 90%);
+  margin-inline: auto;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 5px;
+}
+
+a:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 6px;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+h1,
+h2 {
+  margin: 0 0 24px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+h1 {
+  font-size: clamp(42px, 5.5vw, 76px);
+}
+
+h2 {
+  font-size: clamp(32px, 4vw, 48px);
+}
+
+p {
+  margin: 0 0 22px;
+  color: var(--muted);
+}
+
+/* Header and wordmark */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding-block: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+header > a {
+  color: var(--navy);
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2px;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+nav a {
+  font-size: 16px;
+  text-decoration: none;
+}
+
+nav a:hover,
+footer a:hover {
+  color: var(--blue);
+}
+
+/* Introduction: text left, Helsinki right */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: clamp(32px, 6vw, 80px);
+  padding-block: 64px 96px;
+}
+
+.hero > div {
+  max-width: 600px;
+}
+
+.hero > img {
+  height: clamp(420px, 48vw, 640px);
+  object-fit: cover;
+  object-position: center 42%;
+  border-radius: 4px;
+}
+
+.eyebrow {
+  margin-bottom: 20px;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Links styled as buttons */
+
+.button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 15px 24px;
+  border-radius: 3px;
+  background: var(--blue);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: var(--navy);
+}
+
+/* Company story */
+
+#about {
+  max-width: 740px;
+  margin-inline: auto;
+  padding-block: 48px 112px;
+}
+
+#about::before {
+  content: "";
+  display: block;
+  width: 52px;
+  height: 5px;
+  margin-bottom: 28px;
+  background: var(--chartreuse);
+}
+
+/* OB-1: Workspace overview and details link */
+
+.spaces {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(32px, 6vw, 80px);
+  padding-block: 24px 112px;
+}
+
+.spaces > img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 4px;
+}
+
+/* Contact information */
+
+footer {
+  padding-block: 48px 32px;
+  border-top: 1px solid var(--border);
+}
+
+footer h2 {
+  font-size: 30px;
+}
+
+address {
+  margin-bottom: 28px;
+  font-style: normal;
+}
+
+footer > p {
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
+/* Smaller screens */
+
+@media (max-width: 760px) {
+  header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  nav {
+    gap: 24px;
+  }
+
+  .hero,
+  .spaces {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-block: 48px 64px;
+  }
+
+  .hero > img {
+    height: 420px;
+  }
+
+  #about {
+    padding-block: 32px 48px;
+  }
+
+  .spaces > img {
+    aspect-ratio: 4 / 3;
+  }
+}

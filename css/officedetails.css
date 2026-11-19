@@ -1,0 +1,962 @@
+/* ==========================================================================
+   Office details page (OB-2) - HTML and CSS only, no JavaScript.
+   Layered on top of css/styles.css (fonts, base colours, header, footer).
+   Every rule is scoped to .details-page (the <body> class of officedetails.html)
+   because index.html loads this file too and must look exactly as before.
+
+   Contents
+   1.  Tokens and shared bits
+   2.  Hero
+   3.  Toolbar (tabs + filter chips)
+   4.  Filter logic (CSS only)
+   5.  Showcase layout
+   6.  Bento gallery + hover effects (mobile: swipe carousel)
+   7.  Info panel and button
+   8.  Photo viewer (CSS only, opens with :target)
+   9.  Text colour and weight
+   10. Reduced motion
+   11. Responsive
+   ========================================================================== */
+
+
+/* ---------- 1. Tokens and shared bits ---------- */
+
+html:has(.details-page) {
+  scroll-behavior: smooth;   /* tab links glide to the office */
+  scrollbar-gutter: stable;  /* page does not jump when the photo viewer hides the scrollbar */
+}
+
+.details-page {
+  /* Brand colours (--navy, --ice, --blue, --chartreuse) come from styles.css.
+     These are just tints/shades of the same palette. */
+  --navy-2: #1c3266;
+  --text: #1f2f47;
+  --white-glass: rgba(255, 255, 255, 0.8);
+  --shadow-sm: 0 1px 2px rgba(16, 29, 53, 0.06), 0 6px 18px rgba(16, 29, 53, 0.06);
+  --shadow-lg: 0 28px 60px rgba(16, 29, 53, 0.18);
+  --radius: 22px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --anchor-offset: 24px; /* space kept free above an office when a tab link scrolls to it (and above the sticky info panel) */
+
+  background: linear-gradient(180deg, var(--ice) 0%, #f3f9fd 45%, var(--ice) 100%);
+}
+
+/* No page scroll behind the open photo viewer */
+.details-page:has(.lb:target) {
+  overflow: hidden;
+}
+
+.details-page .icon {
+  flex: none;
+  width: 1.15em;
+  height: 1.15em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Focus ring for keyboard users */
+.details-page :focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* Skip link: visible only when focused with the keyboard */
+.details-page .skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 200;
+  padding: 10px 18px 8px;
+  border-radius: 999px;
+  background: var(--navy);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+
+.details-page .skip-link:focus {
+  top: 12px;
+}
+
+/* "Back to front page" links */
+.details-page .back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s, transform 0.25s var(--ease);
+}
+
+.details-page .back-link:hover {
+  color: var(--blue);
+  transform: translateX(-4px);
+}
+
+.details-page .details-back {
+  padding-block: 8px 64px;
+}
+
+
+/* ---------- 2. Hero ---------- */
+
+.details-page .dp-hero {
+  position: relative;
+  isolation: isolate; /* keeps the blurred shapes behind the text */
+  overflow: hidden;
+  margin-top: 24px;
+  padding: clamp(28px, 4vw, 52px) clamp(24px, 5vw, 72px);
+  border-radius: 28px;
+  /* Layers (top to bottom): fine dot grid, soft light from the top right, base gradient */
+  background:
+    radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1.5px) 0 0 / 24px 24px,
+    radial-gradient(ellipse at 85% 0%, rgba(111, 141, 255, 0.35), transparent 55%),
+    linear-gradient(120deg, var(--navy) 0%, var(--navy-2) 100%);
+  color: #fff;
+}
+
+/* Thin chartreuse line along the bottom edge, in the brand accent colour */
+.details-page .dp-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--chartreuse), transparent 60%);
+}
+
+/* Blurred colour shapes that drift slowly */
+.details-page .shape {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(70px);
+  animation: shape-drift 14s ease-in-out infinite alternate;
+}
+
+.details-page .shape-1 {
+  top: -150px;
+  right: -60px;
+  width: 400px;
+  height: 400px;
+  background: var(--blue);
+  opacity: 0.75;
+}
+
+.details-page .shape-2 {
+  right: 14%;
+  bottom: -170px;
+  width: 260px;
+  height: 260px;
+  background: var(--chartreuse);
+  opacity: 0.4;
+  animation-duration: 18s;
+  animation-delay: -5s;
+}
+
+.details-page .shape-3 {
+  top: 10%;
+  left: -110px;
+  width: 260px;
+  height: 260px;
+  background: #6f8dff;
+  opacity: 0.3;
+  animation-duration: 16s;
+  animation-delay: -9s;
+}
+
+@keyframes shape-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(50px, -36px, 0) scale(1.18); }
+}
+
+.details-page .dp-hero .eyebrow {
+  color: var(--chartreuse);
+}
+
+.details-page .dp-hero h1 {
+  max-width: none;
+  margin-bottom: 14px;
+  font-size: clamp(36px, 5.2vw, 64px);
+  line-height: 1.04;
+}
+
+.details-page .dp-hero h1 span {
+  color: var(--chartreuse);
+}
+
+.details-page .hero-text {
+  max-width: 600px;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 20px;
+}
+
+/* Stat pills */
+.details-page .hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.details-page .hero-pills li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px 7px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 16px;
+  font-weight: 700;
+  transition: transform 0.3s var(--ease), background 0.3s;
+}
+
+.details-page .hero-pills li:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.details-page .hero-pills .icon {
+  color: var(--chartreuse);
+}
+
+/* Hero content fades up once on load */
+.details-page .dp-hero > :not(.shape) {
+  animation: hero-in 0.8s var(--ease) both;
+}
+
+.details-page .dp-hero h1          { animation-delay: 0.08s; }
+.details-page .dp-hero .hero-text  { animation-delay: 0.16s; }
+.details-page .dp-hero .hero-pills { animation-delay: 0.24s; }
+
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+
+
+/* ---------- 3. Toolbar: tabs + filter chips ----------
+   It is NOT sticky: it scrolls away with the page, so it is hidden while you scroll down.
+   (To make it follow you again, use: position: sticky; top: 12px; z-index: 20;) */
+
+.details-page .dp-toolbar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 24px;
+  margin-top: 24px;
+  padding: 10px 12px;
+  border: 1px solid rgba(186, 203, 219, 0.85);
+  border-radius: 24px;
+  background: var(--white-glass);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Pill tab bar (segmented control) */
+.details-page .dp-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  max-width: 100%;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--ice);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.details-page .dp-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.details-page .dp-tabs .dp-tab {
+  flex: none;
+  padding: 9px 20px 7px;
+  border-radius: 999px;
+  color: var(--navy);
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.details-page .dp-tabs .dp-tab:hover {
+  background: #fff;
+  color: var(--blue);
+}
+
+/* Active tab = the office that was last chosen (:target). With nothing chosen yet, the first tab. */
+.details-page main:has(#focus-desk:target, #focus-desk .lb:target) .dp-tab[href="#focus-desk"],
+.details-page main:has(#team-room:target, #team-room .lb:target) .dp-tab[href="#team-room"],
+.details-page main:has(#harbour-room:target, #harbour-room .lb:target) .dp-tab[href="#harbour-room"],
+.details-page main:not(:has(.showcase:target, .lb:target)) .dp-tab[href="#focus-desk"],
+.details-page main:not(:has(.showcase:target, .lb:target)) .dp-tab[href="#focus-desk"]:hover {
+  background: var(--navy);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(16, 29, 53, 0.25);
+}
+
+.details-page .dp-tabs .dp-tab:focus-visible {
+  outline-offset: 1px;
+}
+
+/* Filter chips: real radio buttons, the label is the visible chip */
+.details-page .dp-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+}
+
+.details-page .filter-label {
+  margin: 0;
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.details-page .chip-row {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Hide the round radio dot but keep it focusable for the keyboard */
+.details-page .chip-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.details-page .chip {
+  flex: none;
+  padding: 8px 15px 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--navy);
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.25s var(--ease);
+}
+
+.details-page .chip:hover {
+  border-color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.details-page .chip-input:checked + .chip {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #fff;
+}
+
+.details-page .chip-input:focus-visible + .chip {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.details-page .filter-result {
+  margin: 14px 4px 0;
+  font-size: 15px;
+}
+
+
+/* ---------- 4. Filter logic (CSS only) ----------
+   The checked radio decides which offices and tabs are visible.
+   An office is shown when its capacity range overlaps the chosen group size:
+     Focus Desk 1  |  Team Room 2-6  |  Harbour Room 4-14                      */
+
+/* Result text: only one of the four messages is visible */
+.details-page .filter-result span {
+  display: none;
+}
+
+.details-page main:has(#f-any:checked)  .r-any,
+.details-page main:has(#f-solo:checked) .r-solo,
+.details-page main:has(#f-mid:checked)  .r-mid,
+.details-page main:has(#f-big:checked)  .r-big {
+  display: inline;
+}
+
+/* Just me (1 person): Focus Desk only */
+.details-page main:has(#f-solo:checked) #team-room,
+.details-page main:has(#f-solo:checked) #harbour-room,
+.details-page main:has(#f-solo:checked) .dp-tab[href="#team-room"],
+.details-page main:has(#f-solo:checked) .dp-tab[href="#harbour-room"],
+
+/* 2-6 people: Team Room + Harbour Room */
+.details-page main:has(#f-mid:checked) #focus-desk,
+.details-page main:has(#f-mid:checked) .dp-tab[href="#focus-desk"],
+
+/* 7 or more: Harbour Room only */
+.details-page main:has(#f-big:checked) #focus-desk,
+.details-page main:has(#f-big:checked) #team-room,
+.details-page main:has(#f-big:checked) .dp-tab[href="#focus-desk"],
+.details-page main:has(#f-big:checked) .dp-tab[href="#team-room"] {
+  display: none;
+}
+
+/* If the first tab is hidden, the highlight rule for "nothing chosen" must not apply to a hidden tab,
+   so the first visible tab is highlighted instead. */
+.details-page main:has(#f-mid:checked):not(:has(.showcase:target, .lb:target)) .dp-tab[href="#team-room"],
+.details-page main:has(#f-big:checked):not(:has(.showcase:target, .lb:target)) .dp-tab[href="#harbour-room"] {
+  background: var(--navy);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(16, 29, 53, 0.25);
+}
+
+
+/* ---------- 5. Showcase layout ---------- */
+
+.details-page .offices {
+  padding-bottom: 8px;
+}
+
+/* One office = gallery + info panel. The second office is flipped (gallery on the right). */
+.details-page .showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(20px, 3vw, 40px);
+  margin-block: 28px 44px;
+  scroll-margin-top: var(--anchor-offset);
+}
+
+.details-page .showcase--flip {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr);
+}
+
+.details-page .showcase--flip .gallery {
+  order: 2;
+}
+
+
+/* ---------- 6. Bento gallery (1 large + 4 small tiles) ---------- */
+
+.details-page .bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  aspect-ratio: 16 / 10;
+}
+
+/* The first tile is the big one: 2 columns x 2 rows */
+.details-page .tile:first-child {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+}
+
+.details-page .tile {
+  position: relative;
+  display: block;
+  min-width: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--border);
+  box-shadow: var(--shadow-sm);
+  cursor: zoom-in;
+  transition: box-shadow 0.4s var(--ease);
+}
+
+.details-page .tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease);
+}
+
+/* Dark gradient overlay with label: fades in on hover / keyboard focus */
+.details-page .tile-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(to top, rgba(16, 29, 53, 0.82), rgba(16, 29, 53, 0.2));
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.details-page .tile-overlay .icon {
+  width: 28px;
+  height: 28px;
+  transform: translateY(8px);
+  transition: transform 0.4s var(--ease);
+}
+
+.details-page .tile:hover img,
+.details-page .tile:focus-visible img {
+  transform: scale(1.07);
+}
+
+.details-page .tile:hover .tile-overlay,
+.details-page .tile:focus-visible .tile-overlay {
+  opacity: 1;
+}
+
+.details-page .tile:hover .tile-overlay .icon,
+.details-page .tile:focus-visible .tile-overlay .icon {
+  transform: none;
+}
+
+.details-page .tile:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Last tile always shows "+ View all" */
+.details-page .tile--more .tile-overlay {
+  background: rgba(16, 29, 53, 0.58);
+  opacity: 1;
+  transition: background 0.35s;
+}
+
+.details-page .tile--more:hover .tile-overlay,
+.details-page .tile--more:focus-visible .tile-overlay {
+  background: rgba(16, 29, 53, 0.78);
+}
+
+
+/* ---------- 7. Info panel and button ---------- */
+
+.details-page .panel {
+  position: sticky;
+  top: var(--anchor-offset);
+  padding: clamp(18px, 2vw, 26px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius);
+  background: var(--white-glass);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+
+.details-page .panel:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.details-page .office-tag {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 4px 12px 2px;
+  border-radius: 999px;
+  background: var(--chartreuse);
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.details-page .panel h2 {
+  margin-bottom: 8px;
+  font-size: clamp(32px, 3.4vw, 44px);
+}
+
+.details-page .panel > p {
+  margin-bottom: 14px;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+/* Feature chips with icons */
+.details-page .features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.details-page .features li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px 3px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--ice);
+  font-size: 15px;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s var(--ease);
+}
+
+.details-page .features li .icon {
+  color: var(--blue);
+}
+
+.details-page .features li:hover {
+  border-color: var(--blue);
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+/* Capacity and price, shown large */
+.details-page .office-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 0 0 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.details-page .office-meta dt {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.details-page .office-meta dd {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.details-page .office-meta strong {
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.details-page .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 0;
+  padding: 13px 24px 11px;
+  border-radius: 999px;
+  background: var(--blue);
+  box-shadow: 0 8px 20px rgba(40, 85, 255, 0.28);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.3s var(--ease);
+}
+
+.details-page .button:hover {
+  background: var(--navy);
+  box-shadow: 0 12px 26px rgba(16, 29, 53, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Arrow slides to the right on hover */
+.details-page .button .arrow {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s var(--ease);
+}
+
+.details-page .button:hover .arrow,
+.details-page .button:focus-visible .arrow {
+  transform: translateX(6px);
+}
+
+
+/* ---------- 8. Photo viewer (CSS only) ----------
+   Every photo has its own full-screen overlay (.lb). It is hidden until the URL hash
+   points to it (:target), e.g. a click on a tile goes to #fd-1.
+   Previous / next / close are ordinary links to other hashes.                      */
+
+.details-page .lb {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 64px clamp(12px, 6vw, 96px) 24px;
+  background: rgba(8, 14, 28, 0.97);
+}
+
+.details-page .lb:target {
+  display: flex;
+  animation: lb-in 0.3s ease both;
+}
+
+@keyframes lb-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Clicking the dark area closes the viewer */
+.details-page .lb-backdrop {
+  position: absolute;
+  inset: 0;
+  cursor: zoom-out;
+}
+
+.details-page .lb-fig {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 100%;
+  margin: 0;
+  animation: lb-slide 0.45s var(--ease) both;
+}
+
+@keyframes lb-slide {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.details-page .lb-fig img {
+  width: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 170px);
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.details-page .lb-fig figcaption {
+  max-width: 70ch;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+}
+
+.details-page .lb-fig figcaption span {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 10px 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.details-page .lb-btn {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  transition: background 0.25s, color 0.25s, transform 0.25s var(--ease);
+}
+
+.details-page .lb-btn .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.details-page .lb-btn:hover {
+  background: var(--chartreuse);
+  color: var(--navy);
+  transform: scale(1.08);
+}
+
+.details-page .lb-btn:focus-visible,
+.details-page .lb-backdrop:focus-visible {
+  outline-color: var(--chartreuse);
+}
+
+.details-page .lb-close { top: 14px; right: clamp(12px, 3vw, 32px); }
+.details-page .lb-prev  { left: clamp(8px, 2vw, 28px);  top: 50%; margin-top: -24px; }
+.details-page .lb-next  { right: clamp(8px, 2vw, 28px); top: 50%; margin-top: -24px; }
+
+
+/* ---------- 9. Text colour and weight ----------
+   Josefin Sans Regular is a thin font. Body text is a little darker, and a
+   hairline stroke gives it a medium weight (the font only has Regular and Bold).
+   Remove this section to go back to plain text. */
+
+.details-page .filter-result,
+.details-page .panel > p,
+.details-page .office-meta dt,
+.details-page footer > p,
+.details-page footer address {
+  color: var(--text);
+}
+
+.details-page .panel > p,
+.details-page .hero-text,
+.details-page .filter-result,
+.details-page footer > p,
+.details-page footer address {
+  -webkit-text-stroke: 0.45px currentColor;
+}
+
+.details-page .dp-tabs .dp-tab,
+.details-page .filter-label,
+.details-page .chip,
+.details-page .features li,
+.details-page .office-meta dd,
+.details-page .office-meta dt,
+.details-page .hero-pills li,
+.details-page .back-link,
+.details-page .office-tag {
+  -webkit-text-stroke: 0.35px currentColor;
+}
+
+
+/* ---------- 10. Reduced motion: no animation, no transitions ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(.details-page) {
+    scroll-behavior: auto;
+  }
+
+  .details-page *,
+  .details-page *::before,
+  .details-page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .details-page .tile:hover img,
+  .details-page .tile:focus-visible img,
+  .details-page .panel:hover,
+  .details-page .button:hover,
+  .details-page .back-link:hover {
+    transform: none;
+  }
+}
+
+
+/* ---------- 11. Responsive ---------- */
+
+/* Toolbar wraps to two rows on mid-size screens */
+@media (max-width: 1100px) {
+  .details-page .dp-toolbar {
+    justify-content: flex-start;
+  }
+}
+
+/* Tablet and phone: stacked layout, bento becomes a swipeable carousel */
+@media (max-width: 860px) {
+  .details-page .showcase,
+  .details-page .showcase--flip {
+    grid-template-columns: minmax(0, 1fr);
+    margin-block: 24px 40px;
+  }
+
+  .details-page .showcase--flip .gallery {
+    order: 0;
+  }
+
+  .details-page .panel {
+    position: static;
+  }
+
+  .details-page .panel:hover {
+    transform: none;
+  }
+
+  /* Horizontal scroll-snap carousel */
+  .details-page .bento {
+    display: flex;
+    gap: 10px;
+    aspect-ratio: auto;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 18px;
+  }
+
+  .details-page .bento::-webkit-scrollbar {
+    display: none;
+  }
+
+  .details-page .tile,
+  .details-page .tile:first-child {
+    flex: 0 0 88%;
+    aspect-ratio: 4 / 3;
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 760px) {
+  .details-page .dp-hero {
+    margin-top: 20px;
+    border-radius: 22px;
+  }
+
+  .details-page .hero-text {
+    font-size: 18px;
+  }
+
+  /* Toolbar stays slim: tabs and chips scroll sideways */
+  .details-page .dp-toolbar {
+    gap: 6px;
+    padding: 8px;
+    border-radius: 20px;
+  }
+
+  .details-page .dp-tabs {
+    width: 100%;
+  }
+
+  .details-page .dp-filter {
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .details-page .dp-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .details-page .filter-label {
+    flex: none;
+    padding-left: 6px;
+  }
+
+  .details-page .chip-row {
+    flex-wrap: nowrap;
+  }
+
+  /* Photo viewer: smaller controls so the photo gets the room */
+  .details-page .lb {
+    padding: 64px 10px 88px;
+  }
+
+  .details-page .lb-fig img {
+    max-height: calc(100vh - 230px);
+  }
+
+  .details-page .lb-prev,
+  .details-page .lb-next {
+    top: auto;
+    bottom: 16px;
+    margin-top: 0;
+  }
+
+  .details-page .lb-prev { left: calc(50% - 60px); }
+  .details-page .lb-next { right: calc(50% - 60px); }
+}

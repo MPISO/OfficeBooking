@@ -1,36 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/officedetails.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Velune. | Workspaces in Helsinki</title>
+
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<section class="hero">
-  <div>
-    <p class="eyebrow">Workspaces in Helsinki</p>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <img
+        src="images/Velune.logo.png"
+        alt="Velune. Home"
+      >
+    </a>
 
-    <h1>Work belongs here.<br>Home is yours.</h1>
+    <!-- Contact information below the logo. -->
+    <address class="header-contact">
+      <span>Example Street 12, Helsinki</span>
+      <a href="mailto:hello@velune.example">
+        hello@velune.example
+      </a>
+      <a href="tel:+35891234567">
+        +358 9 123 4567
+      </a>
+    </address>
+  </header>
 
-    <p>
-      Comfortable workspaces for individuals, small teams
-      and everyone around the same table.
-      Bring your working day here. Leave it here when you head home.
-    </p>
+  <main>
+    <!-- Introduction -->
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Workspaces in Helsinki</p>
 
-    <a class="button" href="#spaces">Discover Velune</a>
-  </div>
+        <h1>Work belongs here.<br>Home is yours.</h1>
 
-  <img
-    src="images/helsinki.jpg"
-    alt="Helsinki waterfront with the cathedral overlooking the harbour"
-    width="1365"
-    height="2048"
-  >
-</section>
+        <p>
+          Comfortable workspaces for individuals, small teams
+          and everyone around the same table.
+          Bring your working day here. Leave it here when you head home.
+        </p>
+      </div>
 
+      <img
+        src="images/helsinki.jpg"
+        alt="Helsinki waterfront with the cathedral overlooking the harbour"
+        width="1365"
+        height="2048"
+      >
+    </section>
+
+    <!-- Company background -->
     <section id="about">
       <h2>A little space between work and home.</h2>
 
@@ -47,46 +70,95 @@
       </p>
     </section>
 
-   <!-- OB-1: Introduce workspace options and link to further details. -->
-<section id="spaces" class="spaces">
-  <img
-    src="images/frontpageoffice.jpg"
-    alt="Bright meeting room with a shared table and large windows"
-    width="2048"
-    height="1365"
-    loading="lazy"
-  >
+    <!-- OB-1: Introduce workspace options and link to further details. -->
+    <section id="spaces" class="spaces">
+      <img
+        src="images/frontpageoffice.jpg"
+        alt="Bright meeting room with a shared table and large windows"
+        width="2048"
+        height="1365"
+        loading="lazy"
+      >
 
-  <div>
-    <p class="eyebrow">Room for your working day</p>
+      <div>
+        <p class="eyebrow">Room for your working day</p>
 
-    <h2>So, what do we offer?</h2>
+        <h2>So, what do we offer?</h2>
 
-    <p>
-      Coming on your own? Settle into a quiet, modern workspace
-      with an ergonomic chair, a spacious desk and a monitor
-      ready for your laptop. A comfortable setting for a focused day.
-    </p>
+        <p>
+          Coming on your own? Settle into a quiet, modern workspace
+          with an ergonomic chair, a spacious desk and a monitor
+          ready for your laptop. A comfortable setting for a focused day.
+        </p>
 
-    <p>
-      Bringing others? We also offer rooms for small teams
-      and larger groups. Whether you are sharing ideas,
-      holding a meeting or planning a training day,
-      there is space to get everyone together.
-    </p>
+        <p>
+          Bringing others? We also offer rooms for small teams
+          and larger groups. Whether you are sharing ideas,
+          holding a meeting or planning a training day,
+          there is space to get everyone together.
+        </p>
 
-    <a class="button" href="officedetails.html">Explore our spaces</a>
-  </div>
-</section>
+        <!-- User story: Compare office prices and capacities.
+             Acceptance criterion: A comparison table on the front page. -->
+        <table class="comparison">
+          <caption>Find the right space for your day</caption>
+
+          <thead>
+            <tr>
+              <th scope="col">Workspace</th>
+              <th scope="col">People</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <th scope="row">Focus Desk</th>
+              <td>1</td>
+              <td>€59 / day</td>
+            </tr>
+
+            <tr>
+              <th scope="row">Team Studio</th>
+              <td>2–4</td>
+              <td>€129 / day</td>
+            </tr>
+
+            <tr>
+              <th scope="row">Meeting Suite</th>
+              <td>8–10</td>
+              <td>€249 / half-day</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <a class="button" href="officedetails.html">
+          Explore our spaces
+        </a>
+      </div>
+    </section>
   </main>
 
+  <!-- User story: Find the rental provider's contact information.
+       Acceptance criterion: Contact information appears in the footer. -->
   <footer id="contact">
-    <h2>Find us.</h2>
+    <h2>Get in touch.</h2>
+
+    <p>Questions about a space? We are happy to help.</p>
 
     <address>
-      Velune.<br>
+      <strong>Velune.</strong><br>
       Example Street 12, Helsinki<br>
-      <a href="mailto:hello@velune.example">hello@velune.example</a>
+
+      Email:
+      <a href="mailto:hello@velune.example">
+        hello@velune.example
+      </a><br>
+
+      Phone:
+      <a href="tel:+35891234567">
+        +358 9 123 4567
+      </a>
     </address>
 
     <p>Student project. Company and contact details are fictional.</p>

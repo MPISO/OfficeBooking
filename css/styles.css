@@ -330,4 +330,32 @@ button:hover {
 .reset:hover {
   background-color: var(--blue);
   color: var(--ice);
+ /* User story: Compare office prices and capacities. */
+.comparison {
+  width: 100%;
+  margin-block: 32px;
+  border-collapse: collapse;
+  font-size: 16px;
+  text-align: left;
+}
+
+.comparison caption {
+  margin-bottom: 12px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.comparison th,
+.comparison td {
+  padding: 14px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.comparison thead {
+  background: var(--navy);
+  color: var(--ice);
+}
+
+.comparison tbody th {
+  font-weight: 400;
 }

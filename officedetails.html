@@ -1,19 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth [scrollbar-gutter:stable] motion-reduce:scroll-auto">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Compare Velune's three workspaces in Helsinki: a Focus Desk, a Team Room and the Harbour Room. See photos, capacity and hourly price.">
+  <meta name="description" content="Compare Velune's three workspaces in Helsinki: a Focus Desk, a Team Room and the Harbour Room. See photos, capacity, location and half-day or full-day prices.">
   <title>Our spaces | Velune. Workspaces in Helsinki</title>
-  <!-- styles.css = shared brand styles, officedetails.css = this page only. No JavaScript on this page. -->
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/officedetails.css">
-</head>
-<body class="details-page">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+  
+    @font-face {
+      font-family: "Josefin Sans";
+      src: url("fonts/JosefinSans-Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Josefin Sans";
+      src: url("fonts/JosefinSans-Bold.ttf") format("truetype");
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
 
-  <!-- Inline SVG icon sprite. Icons are used further down with <use href="#i-name"> -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    @theme {
+      --color-navy: #101d35;
+      --color-ice: #e5f1fa;
+      --color-brand: #2855ff;
+      --color-chartreuse: #d6ef68;
+      --color-muted: #45566c;
+      --color-line: #bacbdb;
+      --font-sans: "Josefin Sans", Arial, sans-serif;
+
+      --animate-drift-a: drift 14s ease-in-out infinite alternate;
+      --animate-drift-b: drift 18s ease-in-out -5s infinite alternate;
+      --animate-hero-in: hero-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+      @keyframes drift { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(2rem, -1.5rem, 0) scale(1.18); } }
+      @keyframes hero-in { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: none; } }
+    }
+  </style>
+</head>
+
+<body class="min-h-dvh bg-linear-to-b from-ice via-[#f3f9fd] to-ice font-sans text-base leading-[1.6] text-navy antialiased [-webkit-text-stroke-width:0.3px]">
+
+
+  <svg width="0" height="0" class="absolute" aria-hidden="true" focusable="false">
     <defs>
+      <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+      <symbol id="i-people" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/><circle cx="9" cy="7" r="4"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
       <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
       <symbol id="i-chair" viewBox="0 0 24 24"><path d="M7 3h10a1 1 0 0 1 1 1v7H6V4a1 1 0 0 1 1-1zM5 14h14M12 14v5M8 21h8"/></symbol>
       <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></symbol>
@@ -25,468 +63,367 @@
       <symbol id="i-video" viewBox="0 0 24 24"><rect x="1" y="5" width="15" height="14" rx="2"/><path d="M23 7l-7 5 7 5V7z"/></symbol>
       <symbol id="i-easel" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="11" rx="1"/><path d="M12 14v7M8 21l4-7 4 7M12 1v2"/></symbol>
       <symbol id="i-catering" viewBox="0 0 24 24"><path d="M3 2v7a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V2M6 2v20M19 15V2a5 5 0 0 0-5 5v6a2 2 0 0 0 2 2h3zm0 0v7"/></symbol>
-      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
-      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
-      <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
-      <symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></symbol>
-      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-      <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
-      <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
-      <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
     </defs>
   </svg>
 
-  <a class="skip-link" href="#offices">Skip to the spaces</a>
+  <a class="absolute -top-16 left-4 z-[200] inline-flex min-h-11 items-center rounded-full bg-navy px-5 font-bold text-white no-underline transition-[top] focus:top-3 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-chartreuse" href="#offices">Skip to the spaces</a>
 
-  <!-- OB-2: Office details. Logo and back link return to the front page. -->
-  <header>
-    <a href="index.html" aria-label="Velune. Back to the front page">Velune.</a>
+  <!-- Header: logo and back link both return to the front page -->
+  <header class="mx-auto w-[92%] max-w-[1600px] flex flex-col gap-1 border-b border-line py-4 sm:flex-row sm:items-center sm:justify-between">
+    <a class="inline-flex min-h-11 items-center text-[1.75rem] leading-none font-bold tracking-[-1.5px] text-navy no-underline sm:text-[2rem] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand" href="index.html" aria-label="Velune. Back to the front page">Velune.</a>
 
     <nav aria-label="Main">
-      <a href="index.html" class="back-link">&larr; Back to front page</a>
+      <a href="index.html" class="inline-flex min-h-11 items-center gap-1.5 font-bold text-navy no-underline transition duration-300 hover:-translate-x-1 hover:text-brand motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand">&larr; Back to front page</a>
     </nav>
   </header>
 
-  <main>
+  <main class="mx-auto w-[92%] max-w-[1600px] pb-6">
 
-    <!-- ================= HERO ================= -->
-    <section class="dp-hero" aria-labelledby="page-title">
-      <!-- Soft blurred colour shapes, animated in CSS (decorative only) -->
-      <span class="shape shape-1" aria-hidden="true"></span>
-      <span class="shape shape-2" aria-hidden="true"></span>
-      <span class="shape shape-3" aria-hidden="true"></span>
+    <!-- ================= HERO (compact) ================= -->
+    <section class="relative isolate mt-4 overflow-hidden rounded-2xl bg-linear-to-br from-navy to-[#1c3266] px-5 py-7 text-white md:px-10 md:py-9" aria-labelledby="page-title">
+      <!-- Decorative background: dot grid, two drifting blurred shapes, accent line -->
+      <span class="absolute inset-0 -z-10 [background-image:radial-gradient(rgba(255,255,255,0.1)_1px,transparent_1.5px)] [background-size:24px_24px]" aria-hidden="true"></span>
+      <span class="absolute -top-24 -right-12 -z-10 size-64 animate-drift-a rounded-full bg-brand opacity-70 blur-[60px] motion-reduce:animate-none" aria-hidden="true"></span>
+      <span class="absolute -bottom-28 right-[18%] -z-10 size-48 animate-drift-b rounded-full bg-chartreuse opacity-30 blur-[60px] motion-reduce:animate-none" aria-hidden="true"></span>
+      <span class="absolute inset-x-0 bottom-0 h-1 bg-linear-to-r from-chartreuse to-transparent" aria-hidden="true"></span>
 
-      <p class="eyebrow">Our spaces</p>
-      <h1 id="page-title">Find the room that <span>fits your day.</span></h1>
-      <p class="hero-text">
-        From a quiet desk for one to a bright room for the whole team.
-        Compare size, features and hourly price, then book the space that fits.
-      </p>
+      <div class="animate-hero-in motion-reduce:animate-none">
+        <p class="mb-2 text-[0.8125rem] font-bold tracking-[0.14em] text-chartreuse uppercase">Our spaces</p>
+        <h1 id="page-title" class="mb-2 text-[2rem] leading-tight font-bold tracking-[-0.02em] md:text-[2.75rem]">Find the room that <span class="text-chartreuse">fits your day.</span></h1>
+        <p class="max-w-2xl text-base text-white/95 md:text-[1.125rem]">
+          From a quiet desk for one to a bright room for the whole team.
+          Compare capacity, location and price, then book a half day or a full day.
+        </p>
 
-      <ul class="hero-pills" aria-label="Quick facts">
-        <li><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg>3 spaces</li>
-        <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>From &euro;6/hour</li>
-        <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Central Helsinki</li>
-      </ul>
-    </section>
-
-    <!-- ================= TOOLBAR: tabs + group size filter (scrolls away with the page) ================= -->
-    <div class="dp-toolbar">
-      <!-- Tabs are plain links to the offices. CSS highlights the one that was clicked (:target). -->
-      <nav class="dp-tabs" aria-label="Jump to a space">
-        <a class="dp-tab" href="#focus-desk">Focus Desk</a>
-        <a class="dp-tab" href="#team-room">Team Room</a>
-        <a class="dp-tab" href="#harbour-room">Harbour Room</a>
-      </nav>
-
-      <!-- Capacity filter, done with radio buttons and CSS only (see officedetails.css, section 4).
-           Radios are keyboard accessible: Tab to the group, then use the arrow keys. -->
-      <div class="dp-filter" role="radiogroup" aria-labelledby="filter-label">
-        <p class="filter-label" id="filter-label">How many people are coming?</p>
-        <div class="chip-row">
-          <input class="chip-input" type="radio" name="size" id="f-any" checked>
-          <label class="chip" for="f-any">Any size</label>
-
-          <input class="chip-input" type="radio" name="size" id="f-solo">
-          <label class="chip" for="f-solo">Just me</label>
-
-          <input class="chip-input" type="radio" name="size" id="f-mid">
-          <label class="chip" for="f-mid">2&ndash;6 people</label>
-
-          <input class="chip-input" type="radio" name="size" id="f-big">
-          <label class="chip" for="f-big">7 or more</label>
-        </div>
+        <ul class="mt-4 flex flex-wrap gap-2" aria-label="Quick facts">
+        <li class="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/12 px-3 py-1 text-sm font-bold"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.05em] stroke-chartreuse" aria-hidden="true"><use href="#i-grid"/></svg>3 spaces</li>
+        <li class="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/12 px-3 py-1 text-sm font-bold"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.05em] stroke-chartreuse" aria-hidden="true"><use href="#i-clock"/></svg>From &euro;20 / half day</li>
+        <li class="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/12 px-3 py-1 text-sm font-bold"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.05em] stroke-chartreuse" aria-hidden="true"><use href="#i-pin"/></svg>Central Helsinki</li>
+        </ul>
       </div>
-    </div>
-
-    <!-- Only the text that matches the selected filter is shown -->
-    <p class="filter-result" aria-live="polite">
-      <span class="r-any">Showing all 3 spaces</span>
-      <span class="r-solo">Showing 1 of 3 spaces for just me</span>
-      <span class="r-mid">Showing 2 of 3 spaces for 2&ndash;6 people</span>
-      <span class="r-big">Showing 1 of 3 spaces for 7 or more</span>
-    </p>
-
-    <!-- ================= OFFICE SHOWCASES ================= -->
-    <section id="offices" class="offices" aria-label="Available spaces">
-
-      <!-- ---------- Office 1: Focus Desk (capacity 1) ---------- -->
-      <article class="showcase" id="focus-desk" aria-labelledby="focus-desk-title">
-        <div class="gallery" role="group" aria-label="Focus Desk photos">
-          <div class="bento">
-            <a class="tile" href="#fd-1" aria-label="Open Focus Desk photo 1 of 5">
-              <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=1600&q=75&auto=format&fit=crop"
-                alt="Desktop computer on a clean white desk beside a bright window with a city view" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile" href="#fd-2" aria-label="Open Focus Desk photo 2 of 5">
-              <img src="https://images.unsplash.com/photo-1718220216044-006f43e3a9b1?w=800&q=75&auto=format&fit=crop"
-                alt="Bright open workspace with rows of desks, monitors and ergonomic chairs" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile" href="#fd-3" aria-label="Open Focus Desk photo 3 of 5">
-              <img src="https://images.unsplash.com/photo-1765366417030-16d9765d920a?w=800&q=75&auto=format&fit=crop"
-                alt="White desks with black ergonomic chairs next to glass partitions" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile" href="#fd-4" aria-label="Open Focus Desk photo 4 of 5">
-              <img src="https://images.unsplash.com/photo-1782406747294-10dd7e3bec06?w=800&q=75&auto=format&fit=crop"
-                alt="Office desks with monitors and mesh chairs under bright ceiling lights" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile tile--more" href="#fd-5" aria-label="Open Focus Desk photo 5 of 5 and view all photos">
-              <img src="https://images.unsplash.com/photo-1575318633968-0383e7d07ca0?w=800&q=75&auto=format&fit=crop"
-                alt="Desk with a monitor and keyboard in a quiet, minimal room" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg>+ View all</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="panel">
-          <span class="office-tag">For one</span>
-          <h2 id="focus-desk-title">Focus Desk</h2>
-          <p>
-            A quiet, modern desk for a focused day on your own. Plug in your laptop,
-            adjust the ergonomic chair and get to work by the window.
-          </p>
-
-          <ul class="features">
-            <li><svg class="icon" aria-hidden="true"><use href="#i-monitor"/></svg>27" monitor</li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-chair"/></svg>Ergonomic chair</li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-wifi"/></svg>Fast Wi-Fi</li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-coffee"/></svg>Coffee &amp; tea</li>
-          </ul>
-
-          <dl class="office-meta">
-            <div>
-              <dt>Capacity</dt>
-              <dd>1 person</dd>
-            </div>
-            <div>
-              <dt>Price</dt>
-              <dd><strong>&euro;6</strong> / hour</dd>
-            </div>
-          </dl>
-
-          <a class="button" href="booking.html?office=focus-desk">Book this office
-            <svg class="icon arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-
-        <!-- Photo viewer: each photo has its own overlay that opens through the URL hash (:target).
-             Close = link back to the office, previous / next = links to the neighbouring photos. -->
-        <div class="lb" id="fd-1" role="dialog" aria-label="Focus Desk, photo 1 of 5">
-          <a class="lb-backdrop" href="#focus-desk" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=1600&q=75&auto=format&fit=crop"
-              alt="Desktop computer on a clean white desk beside a bright window with a city view" loading="lazy">
-            <figcaption>Desktop computer on a clean white desk beside a bright window with a city view <span>1 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#focus-desk" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#fd-5" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#fd-2" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="fd-2" role="dialog" aria-label="Focus Desk, photo 2 of 5">
-          <a class="lb-backdrop" href="#focus-desk" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1718220216044-006f43e3a9b1?w=1600&q=75&auto=format&fit=crop"
-              alt="Bright open workspace with rows of desks, monitors and ergonomic chairs" loading="lazy">
-            <figcaption>Bright open workspace with rows of desks, monitors and ergonomic chairs <span>2 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#focus-desk" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#fd-1" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#fd-3" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="fd-3" role="dialog" aria-label="Focus Desk, photo 3 of 5">
-          <a class="lb-backdrop" href="#focus-desk" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1765366417030-16d9765d920a?w=1600&q=75&auto=format&fit=crop"
-              alt="White desks with black ergonomic chairs next to glass partitions" loading="lazy">
-            <figcaption>White desks with black ergonomic chairs next to glass partitions <span>3 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#focus-desk" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#fd-2" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#fd-4" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="fd-4" role="dialog" aria-label="Focus Desk, photo 4 of 5">
-          <a class="lb-backdrop" href="#focus-desk" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1782406747294-10dd7e3bec06?w=1600&q=75&auto=format&fit=crop"
-              alt="Office desks with monitors and mesh chairs under bright ceiling lights" loading="lazy">
-            <figcaption>Office desks with monitors and mesh chairs under bright ceiling lights <span>4 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#focus-desk" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#fd-3" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#fd-5" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="fd-5" role="dialog" aria-label="Focus Desk, photo 5 of 5">
-          <a class="lb-backdrop" href="#focus-desk" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1575318633968-0383e7d07ca0?w=1600&q=75&auto=format&fit=crop"
-              alt="Desk with a monitor and keyboard in a quiet, minimal room" loading="lazy">
-            <figcaption>Desk with a monitor and keyboard in a quiet, minimal room <span>5 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#focus-desk" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#fd-4" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#fd-1" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-      </article>
-
-      <!-- ---------- Office 2: Team Room (capacity 2-6, gallery on the right on desktop) ---------- -->
-      <article class="showcase showcase--flip" id="team-room" aria-labelledby="team-room-title">
-        <div class="gallery" role="group" aria-label="Team Room photos">
-          <div class="bento">
-            <a class="tile" href="#tr-1" aria-label="Open Team Room photo 1 of 5">
-              <img src="https://images.unsplash.com/photo-1571624436279-b272aff752b5?w=1600&q=75&auto=format&fit=crop"
-                alt="Oval meeting table with orange chairs in a room with glass walls" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile" href="#tr-2" aria-label="Open Team Room photo 2 of 5">
-              <img src="https://images.unsplash.com/photo-1661169399398-dd271af8f651?w=800&q=75&auto=format&fit=crop"
-                alt="Small glass-walled meeting room with a wall-mounted screen and a laptop on the table" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile" href="#tr-3" aria-label="Open Team Room photo 3 of 5">
-              <img src="https://images.unsplash.com/photo-1631247046812-20381f66a8e5?w=800&q=75&auto=format&fit=crop"
-                alt="Compact meeting room with a white table, grey chairs and a wall screen" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile" href="#tr-4" aria-label="Open Team Room photo 4 of 5">
-              <img src="https://images.unsplash.com/photo-1572025442811-aa5146a780fb?w=800&q=75&auto=format&fit=crop"
-                alt="Small meeting table with black chairs in front of a whiteboard wall" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile tile--more" href="#tr-5" aria-label="Open Team Room photo 5 of 5 and view all photos">
-              <img src="https://images.unsplash.com/photo-1542089363-bba089ffaa25?w=800&q=75&auto=format&fit=crop"
-                alt="Bright white meeting room with a dark table, a laptop and large windows" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg>+ View all</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="panel">
-          <span class="office-tag">Most popular</span>
-          <h2 id="team-room-title">Team Room</h2>
-          <p>
-            A private room for small teams. Share ideas around one table,
-            run a workshop on the big screen and keep the door closed when you need to focus.
-          </p>
-
-          <ul class="features">
-            <li><svg class="icon" aria-hidden="true"><use href="#i-screen"/></svg>55" screen</li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-board"/></svg>Whiteboard</li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>Private room</li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-coffee"/></svg>Coffee &amp; tea</li>
-          </ul>
-
-          <dl class="office-meta">
-            <div>
-              <dt>Capacity</dt>
-              <dd>2&ndash;6 people</dd>
-            </div>
-            <div>
-              <dt>Price</dt>
-              <dd><strong>&euro;25</strong> / hour</dd>
-            </div>
-          </dl>
-
-          <a class="button" href="booking.html?office=team-room">Book this office
-            <svg class="icon arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-
-        <div class="lb" id="tr-1" role="dialog" aria-label="Team Room, photo 1 of 5">
-          <a class="lb-backdrop" href="#team-room" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1571624436279-b272aff752b5?w=1600&q=75&auto=format&fit=crop"
-              alt="Oval meeting table with orange chairs in a room with glass walls" loading="lazy">
-            <figcaption>Oval meeting table with orange chairs in a room with glass walls <span>1 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#team-room" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#tr-5" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#tr-2" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="tr-2" role="dialog" aria-label="Team Room, photo 2 of 5">
-          <a class="lb-backdrop" href="#team-room" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1661169399398-dd271af8f651?w=1600&q=75&auto=format&fit=crop"
-              alt="Small glass-walled meeting room with a wall-mounted screen and a laptop on the table" loading="lazy">
-            <figcaption>Small glass-walled meeting room with a wall-mounted screen and a laptop on the table <span>2 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#team-room" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#tr-1" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#tr-3" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="tr-3" role="dialog" aria-label="Team Room, photo 3 of 5">
-          <a class="lb-backdrop" href="#team-room" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1631247046812-20381f66a8e5?w=1600&q=75&auto=format&fit=crop"
-              alt="Compact meeting room with a white table, grey chairs and a wall screen" loading="lazy">
-            <figcaption>Compact meeting room with a white table, grey chairs and a wall screen <span>3 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#team-room" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#tr-2" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#tr-4" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="tr-4" role="dialog" aria-label="Team Room, photo 4 of 5">
-          <a class="lb-backdrop" href="#team-room" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1572025442811-aa5146a780fb?w=1600&q=75&auto=format&fit=crop"
-              alt="Small meeting table with black chairs in front of a whiteboard wall" loading="lazy">
-            <figcaption>Small meeting table with black chairs in front of a whiteboard wall <span>4 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#team-room" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#tr-3" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#tr-5" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="tr-5" role="dialog" aria-label="Team Room, photo 5 of 5">
-          <a class="lb-backdrop" href="#team-room" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1542089363-bba089ffaa25?w=1600&q=75&auto=format&fit=crop"
-              alt="Bright white meeting room with a dark table, a laptop and large windows" loading="lazy">
-            <figcaption>Bright white meeting room with a dark table, a laptop and large windows <span>5 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#team-room" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#tr-4" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#tr-1" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-      </article>
-
-      <!-- ---------- Office 3: Harbour Room (capacity 4-14) ---------- -->
-      <article class="showcase" id="harbour-room" aria-labelledby="harbour-room-title">
-        <div class="gallery" role="group" aria-label="Harbour Room photos">
-          <div class="bento">
-            <a class="tile" href="#hr-1" aria-label="Open Harbour Room photo 1 of 5">
-              <img src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?w=1600&q=75&auto=format&fit=crop"
-                alt="Large conference room with a long table and tall windows over the city" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile" href="#hr-2" aria-label="Open Harbour Room photo 2 of 5">
-              <img src="https://images.unsplash.com/photo-1723810392439-a3bb30b2d5c0?w=800&q=75&auto=format&fit=crop"
-                alt="Long conference table with black chairs in a glass-walled room" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile" href="#hr-3" aria-label="Open Harbour Room photo 3 of 5">
-              <img src="https://images.unsplash.com/photo-1764810815228-b7f9432eec5c?w=800&q=75&auto=format&fit=crop"
-                alt="Wood-panelled meeting room with an oval table and wall screens" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile" href="#hr-4" aria-label="Open Harbour Room photo 4 of 5">
-              <img src="https://images.unsplash.com/photo-1697059361461-b81d0e98c3af?w=800&q=75&auto=format&fit=crop"
-                alt="Long wooden table with grey chairs in front of a brick wall and a whiteboard" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-zoom"/></svg>View photo</span>
-            </a>
-            <a class="tile tile--more" href="#hr-5" aria-label="Open Harbour Room photo 5 of 5 and view all photos">
-              <img src="https://images.unsplash.com/photo-1694253988732-816ab6e60caa?w=800&q=75&auto=format&fit=crop"
-                alt="Training room with a very long table and rows of chairs" loading="lazy" decoding="async">
-              <span class="tile-overlay"><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg>+ View all</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="panel">
-          <span class="office-tag">For groups</span>
-          <h2 id="harbour-room-title">Harbour Room</h2>
-          <p>
-            Our largest room for meetings, training days and workshops.
-            Plenty of light, a projector and space for everyone around the same table.
-          </p>
-
-          <ul class="features">
-            <li><svg class="icon" aria-hidden="true"><use href="#i-projector"/></svg>Projector</li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-video"/></svg>Video calls</li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-easel"/></svg>Flip chart</li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-catering"/></svg>Catering on request</li>
-          </ul>
-
-          <dl class="office-meta">
-            <div>
-              <dt>Capacity</dt>
-              <dd>4&ndash;14 people</dd>
-            </div>
-            <div>
-              <dt>Price</dt>
-              <dd><strong>&euro;55</strong> / hour</dd>
-            </div>
-          </dl>
-
-          <a class="button" href="booking.html?office=harbour-room">Book this office
-            <svg class="icon arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-
-        <div class="lb" id="hr-1" role="dialog" aria-label="Harbour Room, photo 1 of 5">
-          <a class="lb-backdrop" href="#harbour-room" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?w=1600&q=75&auto=format&fit=crop"
-              alt="Large conference room with a long table and tall windows over the city" loading="lazy">
-            <figcaption>Large conference room with a long table and tall windows over the city <span>1 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#harbour-room" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#hr-5" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#hr-2" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="hr-2" role="dialog" aria-label="Harbour Room, photo 2 of 5">
-          <a class="lb-backdrop" href="#harbour-room" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1723810392439-a3bb30b2d5c0?w=1600&q=75&auto=format&fit=crop"
-              alt="Long conference table with black chairs in a glass-walled room" loading="lazy">
-            <figcaption>Long conference table with black chairs in a glass-walled room <span>2 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#harbour-room" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#hr-1" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#hr-3" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="hr-3" role="dialog" aria-label="Harbour Room, photo 3 of 5">
-          <a class="lb-backdrop" href="#harbour-room" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1764810815228-b7f9432eec5c?w=1600&q=75&auto=format&fit=crop"
-              alt="Wood-panelled meeting room with an oval table and wall screens" loading="lazy">
-            <figcaption>Wood-panelled meeting room with an oval table and wall screens <span>3 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#harbour-room" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#hr-2" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#hr-4" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="hr-4" role="dialog" aria-label="Harbour Room, photo 4 of 5">
-          <a class="lb-backdrop" href="#harbour-room" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1697059361461-b81d0e98c3af?w=1600&q=75&auto=format&fit=crop"
-              alt="Long wooden table with grey chairs in front of a brick wall and a whiteboard" loading="lazy">
-            <figcaption>Long wooden table with grey chairs in front of a brick wall and a whiteboard <span>4 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#harbour-room" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#hr-3" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#hr-5" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-        <div class="lb" id="hr-5" role="dialog" aria-label="Harbour Room, photo 5 of 5">
-          <a class="lb-backdrop" href="#harbour-room" aria-label="Close photo viewer"></a>
-          <figure class="lb-fig">
-            <img src="https://images.unsplash.com/photo-1694253988732-816ab6e60caa?w=1600&q=75&auto=format&fit=crop"
-              alt="Training room with a very long table and rows of chairs" loading="lazy">
-            <figcaption>Training room with a very long table and rows of chairs <span>5 / 5</span></figcaption>
-          </figure>
-          <a class="lb-btn lb-close" href="#harbour-room" aria-label="Close photo viewer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></a>
-          <a class="lb-btn lb-prev" href="#hr-4" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></a>
-          <a class="lb-btn lb-next" href="#hr-1" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
-        </div>
-      </article>
     </section>
 
-    <div class="details-back">
-      <a href="index.html" class="back-link">&larr; Back to front page</a>
+    <!-- ================= THREE OFFICES, STACKED =================
+         One full-width section after the other (no card grid). Scroll down to see all three. -->
+    <div id="offices" class="mt-8 scroll-mt-4" role="region" aria-label="Available spaces">
+
+      <!-- ---------- Focus Desk ---------->
+      <section class="office scroll-mt-6 border-t border-line pt-10 pb-12 first:border-t-0 first:pt-0" id="focus-desk" aria-labelledby="focus-desk-title">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-10">
+
+         
+          <div class="group/gal min-w-0 lg:sticky lg:top-6 lg:self-start">
+            <div class="aspect-[3/2] overflow-hidden rounded-2xl bg-[#cddbea] shadow-sm">
+              <img class="hidden size-full object-cover group-has-[#focus-photo-1:checked]/gal:block" src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Desktop computer on a clean white desk beside a bright window with a city view" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#focus-photo-2:checked]/gal:block" src="https://images.unsplash.com/photo-1718220216044-006f43e3a9b1?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Bright open workspace with rows of desks, monitors and ergonomic chairs" loading="lazy" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#focus-photo-3:checked]/gal:block" src="https://images.unsplash.com/photo-1765366417030-16d9765d920a?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="White desks with black ergonomic chairs next to glass partitions" loading="lazy" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#focus-photo-4:checked]/gal:block" src="https://images.unsplash.com/photo-1782406747294-10dd7e3bec06?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Office desks with monitors and mesh chairs under bright ceiling lights" loading="lazy" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#focus-photo-5:checked]/gal:block" src="https://images.unsplash.com/photo-1575318633968-0383e7d07ca0?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Desk with a monitor and keyboard in a quiet, minimal room" loading="lazy" decoding="async">
+            </div>
+            <div class="-mx-1 mt-3 flex gap-2 overflow-x-auto px-1 py-1.5 md:overflow-visible" role="radiogroup" aria-label="Choose a photo of the Focus Desk">
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-focus" id="focus-photo-1" checked>
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Desktop computer on a clean white desk beside a bright window with a city view" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-focus" id="focus-photo-2">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1718220216044-006f43e3a9b1?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Bright open workspace with rows of desks, monitors and ergonomic chairs" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-focus" id="focus-photo-3">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1765366417030-16d9765d920a?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="White desks with black ergonomic chairs next to glass partitions" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-focus" id="focus-photo-4">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1782406747294-10dd7e3bec06?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Office desks with monitors and mesh chairs under bright ceiling lights" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-focus" id="focus-photo-5">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1575318633968-0383e7d07ca0?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Desk with a monitor and keyboard in a quiet, minimal room" loading="lazy">
+              </label>
+            </div>
+          </div>
+
+          <!-- RIGHT: INFORMATION -->
+          <div class="min-w-0 space-y-7">
+
+            <div>
+              <span class="inline-block rounded-full bg-chartreuse px-2.5 pt-0.5 pb-px text-[0.8125rem] font-bold tracking-[0.06em] text-navy uppercase">For one</span>
+              <h2 id="focus-desk-title" class="mt-2 text-[1.75rem] leading-tight font-bold tracking-[-0.02em] md:text-4xl">Focus Desk</h2>
+              <p class="mt-2 text-base text-navy/90 md:text-[1.125rem]">A quiet, modern desk for a focused day on your own. Plug in your laptop, adjust the ergonomic chair and get to work by the window. Coffee and tea are included, so you can stay focused all day.</p>
+              <ul class="mt-4 flex flex-wrap gap-1.5">
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-monitor"/></svg>27" monitor</li>
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-chair"/></svg>Ergonomic chair</li>
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-wifi"/></svg>Fast Wi-Fi</li>
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-coffee"/></svg>Coffee &amp; tea</li>
+              </ul>
+              <dl class="mt-4 flex items-center gap-2.5">
+                <dt class="flex items-center gap-1.5 text-[0.8125rem] font-bold tracking-[0.1em] text-muted uppercase"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.2em]" aria-hidden="true"><use href="#i-people"/></svg>Capacity</dt>
+                <dd class="font-bold">1 person</dd>
+              </dl>
+            </div>
+
+            <!-- Prices (a <dl>) -->
+            <section aria-labelledby="focus-desk-prices">
+              <h3 id="focus-desk-prices" class="text-lg leading-tight font-bold md:text-xl">Prices</h3>
+              <dl class="mt-3 grid grid-cols-2 gap-3">
+                <div class="rounded-xl border border-line bg-white p-3.5">
+                  <dt class="text-[0.8125rem] font-bold tracking-[0.1em] text-muted uppercase">Half day</dt>
+                  <dd class="mt-1">
+                    <strong class="block text-2xl leading-none font-bold md:text-[1.75rem]">&euro;20</strong>
+                    <span class="mt-1.5 block text-[0.8125rem] leading-snug text-balance text-muted">4 hours &middot; <span class="whitespace-nowrap">08:00&ndash;12:00</span> or <span class="whitespace-nowrap">13:00&ndash;17:00</span></span>
+                  </dd>
+                </div>
+                <div class="rounded-xl border border-line bg-white p-3.5">
+                  <dt class="text-[0.8125rem] font-bold tracking-[0.1em] text-muted uppercase">Full day</dt>
+                  <dd class="mt-1">
+                    <strong class="block text-2xl leading-none font-bold md:text-[1.75rem]">&euro;35</strong>
+                    <span class="mt-1.5 block text-[0.8125rem] leading-snug text-balance text-muted">8 hours &middot; <span class="whitespace-nowrap">08:00&ndash;17:00</span></span>
+                  </dd>
+                </div>
+              </dl>
+            </section>
+
+            <!-- Location: pin, area, address, getting there, then the map (always visible) -->
+            <section aria-labelledby="focus-desk-location">
+              <h3 id="focus-desk-location" class="text-lg leading-tight font-bold md:text-xl">Location</h3>
+              <div class="mt-3 flex gap-3">
+                <svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] mt-0.5 size-6 text-brand" aria-hidden="true"><use href="#i-pin"/></svg>
+                <div>
+                  <p class="leading-tight font-bold">Kamppi</p>
+                  <address class="mt-0.5 not-italic">Malminkatu 18 B, 00100 Helsinki</address>
+                  <p class="mt-1 text-[0.9375rem] text-navy/90"><span class="font-bold">Getting there:</span> Kamppi Center, with a metro station and a bus terminal, is close by.</p>
+                </div>
+              </div>
+              <iframe class="mt-3 h-56 w-full rounded-2xl border-0 bg-[#cddbea] sm:h-64 lg:h-72" title="Map of Kamppi, Helsinki, showing the area of the Focus Desk" src="https://www.openstreetmap.org/export/embed.html?bbox=24.9257%2C60.1651%2C24.9377%2C60.1721&amp;layer=mapnik&amp;marker=60.1686%2C24.9317" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+                <a class="group/dir inline-flex min-h-11 items-center gap-2 rounded-full border border-navy px-5 font-bold whitespace-nowrap text-navy no-underline transition duration-300 hover:bg-navy hover:text-white motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand" href="https://www.google.com/maps/dir/?api=1&amp;destination=60.1686,24.9317" target="_blank" rel="noopener">Get directions <svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] transition-transform duration-300 group-hover/dir:translate-x-1 motion-reduce:transition-none motion-reduce:transform-none" aria-hidden="true"><use href="#i-arrow"/></svg><span class="sr-only">(opens Google Maps in a new tab)</span></a>
+                <p class="text-[0.8125rem] text-muted">Addresses are fictional. The map shows the area.</p>
+              </div>
+            </section>
+
+            <!-- ONE button: text and arrow on one line, full width on phones -->
+            <a class="group/btn inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full bg-brand px-8 font-bold whitespace-nowrap text-white no-underline shadow-[0_8px_20px_rgba(40,85,255,0.25)] transition duration-300 hover:-translate-y-0.5 hover:bg-navy sm:w-fit motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand" href="booking.html?office=focus-desk">Book this office <svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-5 transition-transform duration-300 group-hover/btn:translate-x-1.5 group-focus-visible/btn:translate-x-1.5 motion-reduce:transition-none motion-reduce:transform-none" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- Team Room ---------->
+      
+      <section class="office scroll-mt-6 border-t border-line pt-10 pb-12" id="team-room" aria-labelledby="team-room-title">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-10">
+
+  
+          <div class="group/gal min-w-0 lg:sticky lg:top-6 lg:self-start">
+            <div class="aspect-[3/2] overflow-hidden rounded-2xl bg-[#cddbea] shadow-sm">
+              <img class="hidden size-full object-cover group-has-[#team-photo-1:checked]/gal:block" src="https://images.unsplash.com/photo-1571624436279-b272aff752b5?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Oval meeting table with orange chairs in a room with glass walls" loading="lazy" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#team-photo-2:checked]/gal:block" src="https://images.unsplash.com/photo-1661169399398-dd271af8f651?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Small glass-walled meeting room with a wall-mounted screen and a laptop on the table" loading="lazy" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#team-photo-3:checked]/gal:block" src="https://images.unsplash.com/photo-1631247046812-20381f66a8e5?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Compact meeting room with a white table, grey chairs and a wall screen" loading="lazy" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#team-photo-4:checked]/gal:block" src="https://images.unsplash.com/photo-1572025442811-aa5146a780fb?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Small meeting table with black chairs in front of a whiteboard wall" loading="lazy" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#team-photo-5:checked]/gal:block" src="https://images.unsplash.com/photo-1542089363-bba089ffaa25?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Bright white meeting room with a dark table, a laptop and large windows" loading="lazy" decoding="async">
+            </div>
+            <div class="-mx-1 mt-3 flex gap-2 overflow-x-auto px-1 py-1.5 md:overflow-visible" role="radiogroup" aria-label="Choose a photo of the Team Room">
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-team" id="team-photo-1" checked>
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1571624436279-b272aff752b5?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Oval meeting table with orange chairs in a room with glass walls" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-team" id="team-photo-2">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1661169399398-dd271af8f651?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Small glass-walled meeting room with a wall-mounted screen and a laptop on the table" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-team" id="team-photo-3">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1631247046812-20381f66a8e5?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Compact meeting room with a white table, grey chairs and a wall screen" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-team" id="team-photo-4">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1572025442811-aa5146a780fb?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Small meeting table with black chairs in front of a whiteboard wall" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-team" id="team-photo-5">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1542089363-bba089ffaa25?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Bright white meeting room with a dark table, a laptop and large windows" loading="lazy">
+              </label>
+            </div>
+          </div>
+
+          <!-- RIGHT: INFORMATION -->
+          <div class="min-w-0 space-y-7">
+
+            <div>
+              <span class="inline-block rounded-full bg-chartreuse px-2.5 pt-0.5 pb-px text-[0.8125rem] font-bold tracking-[0.06em] text-navy uppercase">Most popular</span>
+              <h2 id="team-room-title" class="mt-2 text-[1.75rem] leading-tight font-bold tracking-[-0.02em] md:text-4xl">Team Room</h2>
+              <p class="mt-2 text-base text-navy/90 md:text-[1.125rem]">A private room for small teams. Share ideas around one table, run a workshop on the big screen and keep the door closed when you need to focus. The 55-inch screen makes it easy to present or to join a video call together.</p>
+              <ul class="mt-4 flex flex-wrap gap-1.5">
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-screen"/></svg>55" screen</li>
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-board"/></svg>Whiteboard</li>
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-lock"/></svg>Private room</li>
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-coffee"/></svg>Coffee &amp; tea</li>
+              </ul>
+              <dl class="mt-4 flex items-center gap-2.5">
+                <dt class="flex items-center gap-1.5 text-[0.8125rem] font-bold tracking-[0.1em] text-muted uppercase"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.2em]" aria-hidden="true"><use href="#i-people"/></svg>Capacity</dt>
+                <dd class="font-bold">2&ndash;6 people</dd>
+              </dl>
+            </div>
+
+            <!-- Prices (a <dl>) -->
+            <section aria-labelledby="team-room-prices">
+              <h3 id="team-room-prices" class="text-lg leading-tight font-bold md:text-xl">Prices</h3>
+              <dl class="mt-3 grid grid-cols-2 gap-3">
+                <div class="rounded-xl border border-line bg-white p-3.5">
+                  <dt class="text-[0.8125rem] font-bold tracking-[0.1em] text-muted uppercase">Half day</dt>
+                  <dd class="mt-1">
+                    <strong class="block text-2xl leading-none font-bold md:text-[1.75rem]">&euro;90</strong>
+                    <span class="mt-1.5 block text-[0.8125rem] leading-snug text-balance text-muted">4 hours &middot; <span class="whitespace-nowrap">08:00&ndash;12:00</span> or <span class="whitespace-nowrap">13:00&ndash;17:00</span></span>
+                  </dd>
+                </div>
+                <div class="rounded-xl border border-line bg-white p-3.5">
+                  <dt class="text-[0.8125rem] font-bold tracking-[0.1em] text-muted uppercase">Full day</dt>
+                  <dd class="mt-1">
+                    <strong class="block text-2xl leading-none font-bold md:text-[1.75rem]">&euro;150</strong>
+                    <span class="mt-1.5 block text-[0.8125rem] leading-snug text-balance text-muted">8 hours &middot; <span class="whitespace-nowrap">08:00&ndash;17:00</span></span>
+                  </dd>
+                </div>
+              </dl>
+            </section>
+
+            <!-- Location: pin, area, address, getting there, then the map (always visible) -->
+            <section aria-labelledby="team-room-location">
+              <h3 id="team-room-location" class="text-lg leading-tight font-bold md:text-xl">Location</h3>
+              <div class="mt-3 flex gap-3">
+                <svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] mt-0.5 size-6 text-brand" aria-hidden="true"><use href="#i-pin"/></svg>
+                <div>
+                  <p class="leading-tight font-bold">Kallio</p>
+                  <address class="mt-0.5 not-italic">Fleminginkatu 20, 00530 Helsinki</address>
+                  <p class="mt-1 text-[0.9375rem] text-navy/90"><span class="font-bold">Getting there:</span> Hakaniemi and S&ouml;rn&auml;inen metro stations are within walking distance.</p>
+                </div>
+              </div>
+              <iframe class="mt-3 h-56 w-full rounded-2xl border-0 bg-[#cddbea] sm:h-64 lg:h-72" title="Map of Kallio, Helsinki, showing the area of the Team Room" src="https://www.openstreetmap.org/export/embed.html?bbox=24.9440%2C60.1805%2C24.9560%2C60.1875&amp;layer=mapnik&amp;marker=60.1840%2C24.9500" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+                <a class="group/dir inline-flex min-h-11 items-center gap-2 rounded-full border border-navy px-5 font-bold whitespace-nowrap text-navy no-underline transition duration-300 hover:bg-navy hover:text-white motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand" href="https://www.google.com/maps/dir/?api=1&amp;destination=60.1840,24.9500" target="_blank" rel="noopener">Get directions <svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] transition-transform duration-300 group-hover/dir:translate-x-1 motion-reduce:transition-none motion-reduce:transform-none" aria-hidden="true"><use href="#i-arrow"/></svg><span class="sr-only">(opens Google Maps in a new tab)</span></a>
+                <p class="text-[0.8125rem] text-muted">Addresses are fictional. The map shows the area.</p>
+              </div>
+            </section>
+
+       
+            <a class="group/btn inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full bg-brand px-8 font-bold whitespace-nowrap text-white no-underline shadow-[0_8px_20px_rgba(40,85,255,0.25)] transition duration-300 hover:-translate-y-0.5 hover:bg-navy sm:w-fit motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand" href="booking.html?office=team-room">Book this office <svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-5 transition-transform duration-300 group-hover/btn:translate-x-1.5 group-focus-visible/btn:translate-x-1.5 motion-reduce:transition-none motion-reduce:transform-none" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+      </section>
+
+    
+      <section class="office scroll-mt-6 border-t border-line pt-10 pb-12" id="harbour-room" aria-labelledby="harbour-room-title">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-10">
+
+    
+          <div class="group/gal min-w-0 lg:sticky lg:top-6 lg:self-start">
+            <div class="aspect-[3/2] overflow-hidden rounded-2xl bg-[#cddbea] shadow-sm">
+              <img class="hidden size-full object-cover group-has-[#harbour-photo-1:checked]/gal:block" src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Large conference room with a long table and tall windows over the city" loading="lazy" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#harbour-photo-2:checked]/gal:block" src="https://images.unsplash.com/photo-1723810392439-a3bb30b2d5c0?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Long conference table with black chairs in a glass-walled room" loading="lazy" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#harbour-photo-3:checked]/gal:block" src="https://images.unsplash.com/photo-1764810815228-b7f9432eec5c?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Wood-panelled meeting room with an oval table and wall screens" loading="lazy" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#harbour-photo-4:checked]/gal:block" src="https://images.unsplash.com/photo-1697059361461-b81d0e98c3af?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Long wooden table with grey chairs in front of a brick wall and a whiteboard" loading="lazy" decoding="async">
+              <img class="hidden size-full object-cover group-has-[#harbour-photo-5:checked]/gal:block" src="https://images.unsplash.com/photo-1694253988732-816ab6e60caa?w=1600&amp;q=75&amp;auto=format&amp;fit=crop" alt="Training room with a very long table and rows of chairs" loading="lazy" decoding="async">
+            </div>
+            <div class="-mx-1 mt-3 flex gap-2 overflow-x-auto px-1 py-1.5 md:overflow-visible" role="radiogroup" aria-label="Choose a photo of the Harbour Room">
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-harbour" id="harbour-photo-1" checked>
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Large conference room with a long table and tall windows over the city" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-harbour" id="harbour-photo-2">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1723810392439-a3bb30b2d5c0?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Long conference table with black chairs in a glass-walled room" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-harbour" id="harbour-photo-3">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1764810815228-b7f9432eec5c?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Wood-panelled meeting room with an oval table and wall screens" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-harbour" id="harbour-photo-4">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1697059361461-b81d0e98c3af?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Long wooden table with grey chairs in front of a brick wall and a whiteboard" loading="lazy">
+              </label>
+              <label class="relative block aspect-[4/3] w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-[#cddbea] opacity-70 transition duration-300 hover:opacity-100 has-[:checked]:opacity-100 has-[:checked]:ring-[3px] has-[:checked]:ring-brand has-[:checked]:ring-offset-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-navy motion-reduce:transition-none md:w-auto md:flex-1">
+                <input class="sr-only" type="radio" name="gallery-harbour" id="harbour-photo-5">
+                <img class="size-full object-cover" src="https://images.unsplash.com/photo-1694253988732-816ab6e60caa?w=400&amp;q=75&amp;auto=format&amp;fit=crop" alt="Training room with a very long table and rows of chairs" loading="lazy">
+              </label>
+            </div>
+          </div>
+
+          <!-- RIGHT: INFORMATION -->
+          <div class="min-w-0 space-y-7">
+
+            <div>
+              <span class="inline-block rounded-full bg-chartreuse px-2.5 pt-0.5 pb-px text-[0.8125rem] font-bold tracking-[0.06em] text-navy uppercase">For groups</span>
+              <h2 id="harbour-room-title" class="mt-2 text-[1.75rem] leading-tight font-bold tracking-[-0.02em] md:text-4xl">Harbour Room</h2>
+              <p class="mt-2 text-base text-navy/90 md:text-[1.125rem]">Our largest room for meetings, training days and workshops. Plenty of light, a projector and space for everyone around the same table. Catering is available on request.</p>
+              <ul class="mt-4 flex flex-wrap gap-1.5">
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-projector"/></svg>Projector</li>
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-video"/></svg>Video calls</li>
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-easel"/></svg>Flip chart</li>
+                <li class="inline-flex items-center gap-2 rounded-full bg-ice px-3 py-1 text-sm"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] stroke-brand" aria-hidden="true"><use href="#i-catering"/></svg>Catering on request</li>
+              </ul>
+              <dl class="mt-4 flex items-center gap-2.5">
+                <dt class="flex items-center gap-1.5 text-[0.8125rem] font-bold tracking-[0.1em] text-muted uppercase"><svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.2em]" aria-hidden="true"><use href="#i-people"/></svg>Capacity</dt>
+                <dd class="font-bold">4&ndash;14 people</dd>
+              </dl>
+            </div>
+
+            <!-- Prices (a <dl>) -->
+            <section aria-labelledby="harbour-room-prices">
+              <h3 id="harbour-room-prices" class="text-lg leading-tight font-bold md:text-xl">Prices</h3>
+              <dl class="mt-3 grid grid-cols-2 gap-3">
+                <div class="rounded-xl border border-line bg-white p-3.5">
+                  <dt class="text-[0.8125rem] font-bold tracking-[0.1em] text-muted uppercase">Half day</dt>
+                  <dd class="mt-1">
+                    <strong class="block text-2xl leading-none font-bold md:text-[1.75rem]">&euro;180</strong>
+                    <span class="mt-1.5 block text-[0.8125rem] leading-snug text-balance text-muted">4 hours &middot; <span class="whitespace-nowrap">08:00&ndash;12:00</span> or <span class="whitespace-nowrap">13:00&ndash;17:00</span></span>
+                  </dd>
+                </div>
+                <div class="rounded-xl border border-line bg-white p-3.5">
+                  <dt class="text-[0.8125rem] font-bold tracking-[0.1em] text-muted uppercase">Full day</dt>
+                  <dd class="mt-1">
+                    <strong class="block text-2xl leading-none font-bold md:text-[1.75rem]">&euro;300</strong>
+                    <span class="mt-1.5 block text-[0.8125rem] leading-snug text-balance text-muted">8 hours &middot; <span class="whitespace-nowrap">08:00&ndash;17:00</span></span>
+                  </dd>
+                </div>
+              </dl>
+            </section>
+
+            <!-- Location: pin, area, address, getting there, then the map (always visible) -->
+            <section aria-labelledby="harbour-room-location">
+              <h3 id="harbour-room-location" class="text-lg leading-tight font-bold md:text-xl">Location</h3>
+              <div class="mt-3 flex gap-3">
+                <svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] mt-0.5 size-6 text-brand" aria-hidden="true"><use href="#i-pin"/></svg>
+                <div>
+                  <p class="leading-tight font-bold">Katajanokka</p>
+                  <address class="mt-0.5 not-italic">Laivastokatu 8, 00160 Helsinki</address>
+                  <p class="mt-1 text-[0.9375rem] text-navy/90"><span class="font-bold">Getting there:</span> On Katajanokka island, with Uspenski Cathedral nearby and the Market Square a short stroll to the west.</p>
+                </div>
+              </div>
+              <iframe class="mt-3 h-56 w-full rounded-2xl border-0 bg-[#cddbea] sm:h-64 lg:h-72" title="Map of Katajanokka, Helsinki, showing the area of the Harbour Room" src="https://www.openstreetmap.org/export/embed.html?bbox=24.9587%2C60.1637%2C24.9707%2C60.1707&amp;layer=mapnik&amp;marker=60.1672%2C24.9647" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+                <a class="group/dir inline-flex min-h-11 items-center gap-2 rounded-full border border-navy px-5 font-bold whitespace-nowrap text-navy no-underline transition duration-300 hover:bg-navy hover:text-white motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand" href="https://www.google.com/maps/dir/?api=1&amp;destination=60.1672,24.9647" target="_blank" rel="noopener">Get directions <svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-[1.1em] transition-transform duration-300 group-hover/dir:translate-x-1 motion-reduce:transition-none motion-reduce:transform-none" aria-hidden="true"><use href="#i-arrow"/></svg><span class="sr-only">(opens Google Maps in a new tab)</span></a>
+                <p class="text-[0.8125rem] text-muted">Addresses are fictional. The map shows the area.</p>
+              </div>
+            </section>
+
+            <a class="group/btn inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full bg-brand px-8 font-bold whitespace-nowrap text-white no-underline shadow-[0_8px_20px_rgba(40,85,255,0.25)] transition duration-300 hover:-translate-y-0.5 hover:bg-navy sm:w-fit motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand" href="booking.html?office=harbour-room">Book this office <svg class="shrink-0 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round] size-5 transition-transform duration-300 group-hover/btn:translate-x-1.5 group-focus-visible/btn:translate-x-1.5 motion-reduce:transition-none motion-reduce:transform-none" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
 
-  <footer id="contact">
-    <h2>Find us.</h2>
+  <footer id="contact" class="mx-auto w-[92%] max-w-[1600px] border-t border-line pt-10 pb-8">
+    <h2 class="mb-4 text-xl leading-tight font-bold md:text-2xl">Find us.</h2>
 
-    <address>
+    <address class="mb-5 not-italic">
       Velune.<br>
       Example Street 12, Helsinki<br>
-      <a href="mailto:hello@velune.example">hello@velune.example</a>
+      <a class="hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand" href="mailto:hello@velune.example">hello@velune.example</a>
     </address>
 
-    <p>
+    <p class="text-sm text-muted">
       Student project. Company and contact details are fictional.
-      Photos from <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>.
+      Photos from <a class="underline underline-offset-4 hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand" href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>.
     </p>
   </footer>
 </body>
